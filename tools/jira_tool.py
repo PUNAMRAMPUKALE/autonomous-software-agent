@@ -19,7 +19,11 @@ class JiraTool:
 
     def get_todo_issues(self):
 
-        jql = f'project={PROJECT_KEY} AND status="To Do" ORDER BY created ASC'
+        jql = (
+            f'project="{PROJECT_KEY}" '
+            'AND status="To Do" '
+            "ORDER BY created ASC"
+        )
 
         return self.client.search_issues(jql)
 
@@ -30,16 +34,46 @@ class JiraTool:
     def print_issue(self, issue):
 
         print("=" * 60)
-
         print("Issue :", issue.key)
         print("Summary :", issue.fields.summary)
-
         print()
-
+        print("Status :", issue.fields.status.name)
+        print()
         print("Description")
-
         print()
-
         print(issue.fields.description)
-
         print("=" * 60)
+
+    def get_transition_id(self, issue, transition_name):
+
+        transitions = self.client.transitions(issue)
+
+        for transition in transitions:
+
+            if transition["name"].lower() == transition_name.lower():
+                return transition["id"]
+
+        return None
+
+    def move_issue(self, issue_key, transition_name):
+
+        issue = self.get_issue(issue_key)
+
+        transition_id = self.get_transition_id(
+            issue,
+            transition_name,
+        )
+
+        if transition_id is None:
+            raise Exception(
+                f"Transition '{transition_name}' not found."
+            )
+
+        self.client.transition_issue(
+            issue,
+            transition_id,
+        )
+
+        print(
+            f"Moved {issue_key} -> {transition_name}"
+        )

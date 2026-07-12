@@ -13,10 +13,21 @@ class PlannerAgent:
         issues = self.jira.get_todo_issues()
 
         if len(issues) == 0:
-            print("No To Do stories found.")
+
+            print("No stories available.")
+
             return None
 
         issue = issues[0]
+
+        print(f"\nSelected Story : {issue.key}")
+
+        self.jira.move_issue(
+            issue.key,
+            "In Progress",
+        )
+
+        issue = self.jira.get_issue(issue.key)
 
         state = AgentState()
 
@@ -29,6 +40,8 @@ class PlannerAgent:
 
     def print_selected_story(self, state):
 
-        issue = self.jira.get_issue(state.issue_key)
+        issue = self.jira.get_issue(
+            state.issue_key,
+        )
 
         self.jira.print_issue(issue)

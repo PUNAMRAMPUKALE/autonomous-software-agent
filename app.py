@@ -11,13 +11,11 @@ def main():
 
         print()
 
-        print("Planner selected")
+        print("Planner finished.")
 
-        print(story.issue_key)
-
-        print()
-
-        planner.print_selected_story(story)
+        planner.print_selected_story(
+            story
+        )
 
 
 if __name__ == "__main__":
