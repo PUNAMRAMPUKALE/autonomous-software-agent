@@ -1,5 +1,24 @@
-from tools.jira_tool import JiraTool
+from agents.planner import PlannerAgent
 
-jira = JiraTool()
 
-jira.read_story("KAN-1")
+def main():
+
+    planner = PlannerAgent()
+
+    story = planner.choose_next_story()
+
+    if story:
+
+        print()
+
+        print("Planner selected")
+
+        print(story.issue_key)
+
+        print()
+
+        planner.print_selected_story(story)
+
+
+if __name__ == "__main__":
+    main()

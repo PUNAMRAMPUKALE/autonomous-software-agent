@@ -1,27 +1,45 @@
 from jira import JIRA
-from config import JIRA_URL, JIRA_EMAIL, JIRA_API_TOKEN
+
+from config import (
+    JIRA_URL,
+    JIRA_EMAIL,
+    JIRA_API_TOKEN,
+    PROJECT_KEY,
+)
 
 
 class JiraTool:
 
     def __init__(self):
+
         self.client = JIRA(
             server=JIRA_URL,
-            basic_auth=(JIRA_EMAIL, JIRA_API_TOKEN)
+            basic_auth=(JIRA_EMAIL, JIRA_API_TOKEN),
         )
 
-    def read_story(self, issue_key):
+    def get_todo_issues(self):
 
-        issue = self.client.issue(issue_key)
+        jql = f'project={PROJECT_KEY} AND status="To Do" ORDER BY created ASC'
 
-        print("=" * 50)
+        return self.client.search_issues(jql)
+
+    def get_issue(self, issue_key):
+
+        return self.client.issue(issue_key)
+
+    def print_issue(self, issue):
+
+        print("=" * 60)
+
         print("Issue :", issue.key)
         print("Summary :", issue.fields.summary)
 
-        print("\nDescription\n")
+        print()
+
+        print("Description")
+
+        print()
 
         print(issue.fields.description)
 
-        print("=" * 50)
-
-        return issue
+        print("=" * 60)
