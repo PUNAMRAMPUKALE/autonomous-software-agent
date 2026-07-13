@@ -96,25 +96,25 @@
         "name": "main",
         "type": "function",
         "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\app.py",
-        "start_line": 4,
-        "end_line": 18,
+        "start_line": 1,
+        "end_line": 19,
         "parent": "",
         "docstring": "",
-        "imports": [
-            "agents.planner"
-        ],
+        "imports": [],
         "calls": [
             "PlannerAgent",
             "planner.choose_next_story",
             "print",
             "print",
-            "planner.print_selected_story"
+            "planner.print_selected_story",
+            "print",
+            "planner.analyze_and_plan"
         ],
         "decorators": [],
         "base_classes": [],
         "language": "Python",
         "complexity": 0,
-        "hash": "dbdac19a7cf2c1f3944bf07716855214e653d3b91af46b5c65b1d1e713911835",
+        "hash": "4a6d262e5046dd5ccd0716bfd31a8190dc129dff6d29d3cd6978a0e819d1db55",
         "symbol_id": "workspace\\autonomous-software-agent\\app.py::main"
     },
     {

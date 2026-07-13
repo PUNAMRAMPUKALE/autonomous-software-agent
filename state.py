@@ -2,6 +2,8 @@ from dataclasses import dataclass, field
 
 from models.symbol import Symbol
 
+from tools.code_patch import CodePatch
+
 
 @dataclass
 class AgentState:
@@ -19,6 +21,8 @@ class AgentState:
     description: str = ""
 
     status: str = ""
+    
+    patch: CodePatch | None = None
 
     # --------------------------------------------------
     # Repository
@@ -65,6 +69,8 @@ class AgentState:
     context: str = ""
 
     llm_prompt: str = ""
+    
+    generated_code: str = ""
 
     # --------------------------------------------------
     # Repository Index
