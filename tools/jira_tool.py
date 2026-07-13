@@ -14,8 +14,15 @@ class JiraTool:
 
         self.client = JIRA(
             server=JIRA_URL,
-            basic_auth=(JIRA_EMAIL, JIRA_API_TOKEN),
+            basic_auth=(
+                JIRA_EMAIL,
+                JIRA_API_TOKEN,
+            ),
         )
+
+    # ---------------------------------------------------------
+    # Read Issues
+    # ---------------------------------------------------------
 
     def get_todo_issues(self):
 
@@ -27,11 +34,21 @@ class JiraTool:
 
         return self.client.search_issues(jql)
 
-    def get_issue(self, issue_key):
+    def get_issue(
+        self,
+        issue_key,
+    ):
 
         return self.client.issue(issue_key)
 
-    def print_issue(self, issue):
+    # ---------------------------------------------------------
+    # Print
+    # ---------------------------------------------------------
+
+    def print_issue(
+        self,
+        issue,
+    ):
 
         print("=" * 60)
         print("Issue :", issue.key)
@@ -44,20 +61,41 @@ class JiraTool:
         print(issue.fields.description)
         print("=" * 60)
 
-    def get_transition_id(self, issue, transition_name):
+    # ---------------------------------------------------------
+    # Workflow Transition
+    # ---------------------------------------------------------
 
-        transitions = self.client.transitions(issue)
+    def get_transition_id(
+        self,
+        issue,
+        transition_name,
+    ):
+
+        transitions = self.client.transitions(
+            issue
+        )
 
         for transition in transitions:
 
-            if transition["name"].lower() == transition_name.lower():
+            if (
+                transition["name"].lower()
+                ==
+                transition_name.lower()
+            ):
+
                 return transition["id"]
 
         return None
 
-    def move_issue(self, issue_key, transition_name):
+    def move_issue(
+        self,
+        issue_key,
+        transition_name,
+    ):
 
-        issue = self.get_issue(issue_key)
+        issue = self.get_issue(
+            issue_key
+        )
 
         transition_id = self.get_transition_id(
             issue,
@@ -65,6 +103,7 @@ class JiraTool:
         )
 
         if transition_id is None:
+
             raise Exception(
                 f"Transition '{transition_name}' not found."
             )
@@ -76,4 +115,104 @@ class JiraTool:
 
         print(
             f"Moved {issue_key} -> {transition_name}"
+        )
+
+    # ---------------------------------------------------------
+    # Add Comment
+    # ---------------------------------------------------------
+
+    def add_comment(
+        self,
+        issue_key,
+        comment,
+    ):
+
+        self.client.add_comment(
+            issue_key,
+            comment,
+        )
+
+        print(
+            f"Comment added to {issue_key}"
+        )
+
+    # ---------------------------------------------------------
+    # Attach Pull Request
+    # ---------------------------------------------------------
+
+    def add_pr_link(
+        self,
+        issue_key,
+        repository,
+        branch,
+        pr_number,
+    ):
+
+        comment = f"""
+Pull Request Created
+
+Repository : {repository}
+
+Branch : {branch}
+
+PR Number : {pr_number}
+"""
+
+        self.add_comment(
+            issue_key,
+            comment,
+        )
+
+    # ---------------------------------------------------------
+    # Test Results
+    # ---------------------------------------------------------
+
+    def record_test_results(
+        self,
+        issue_key,
+        passed,
+        output,
+    ):
+
+        status = (
+            "PASSED"
+            if passed
+            else
+            "FAILED"
+        )
+
+        comment = f"""
+Test Results
+
+Status : {status}
+
+Output
+
+{output}
+"""
+
+        self.add_comment(
+            issue_key,
+            comment,
+        )
+
+    # ---------------------------------------------------------
+    # Completion Notes
+    # ---------------------------------------------------------
+
+    def update_completion_notes(
+        self,
+        issue_key,
+        notes,
+    ):
+
+        comment = f"""
+Completion Notes
+
+{notes}
+"""
+
+        self.add_comment(
+            issue_key,
+            comment,
         )

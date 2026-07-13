@@ -2,9 +2,16 @@
 agents/tester_agent.py
 
 Milestone 10
+
 Tester Agent
 
-Runs project validation after generated patches are applied.
+Responsibilities
+----------------
+1. Detect project type.
+2. Execute project test suite.
+3. Capture test output.
+4. Store results in AgentState.
+5. Return updated state.
 """
 
 import os
@@ -15,16 +22,10 @@ class TesterAgent:
 
     def __init__(self):
 
-        self.commands = [
+        self.timeout = 600
 
-            ["pytest"],
-
-            ["python", "-m", "pytest"],
-
-            ["python", "-m", "unittest"],
-
-        ]
-
+    # ---------------------------------------------------------
+    # Main
     # ---------------------------------------------------------
 
     def run_tests(
@@ -40,29 +41,58 @@ class TesterAgent:
 
         repository = getattr(
             state,
-            "repository_path",
-            None,
+            "local_path",
+            "",
         )
 
-        if repository is None:
+        if not repository:
 
             repository = getattr(
                 state,
-                "repo_path",
-                None,
+                "repository_path",
+                "",
             )
 
-        if repository is None:
+        if not repository:
 
             print(
-                "Repository path not found."
+                "Repository path not available."
             )
 
             state.tests_passed = False
 
+            state.test_output = (
+                "Repository path missing."
+            )
+
             return state
 
-        for command in self.commands:
+        commands = self.detect_test_commands(
+            repository
+        )
+
+        if not commands:
+
+            print(
+                "No supported test framework detected."
+            )
+
+            state.tests_passed = True
+
+            state.test_output = (
+                "No tests detected."
+            )
+
+            return state
+
+        for command in commands:
+
+            print()
+
+            print(
+                "Running:",
+                " ".join(command),
+            )
 
             try:
 
@@ -76,33 +106,23 @@ class TesterAgent:
 
                     text=True,
 
-                    timeout=300,
+                    timeout=self.timeout,
 
                 )
 
-                print()
-
-                print(
-                    "Command :",
-                    " ".join(command),
+                output = (
+                    result.stdout
+                    + "\n"
+                    + result.stderr
                 )
 
-                print(
-                    "Return Code :",
-                    result.returncode,
+                state.test_command = (
+                    " ".join(command)
                 )
 
-                if result.stdout:
+                state.test_output = output
 
-                    print()
-
-                    print(result.stdout)
-
-                if result.stderr:
-
-                    print()
-
-                    print(result.stderr)
+                print(output)
 
                 if result.returncode == 0:
 
@@ -114,36 +134,163 @@ class TesterAgent:
 
                     state.tests_passed = True
 
-                    state.test_command = " ".join(
-                        command
-                    )
-
                     return state
+
+                print()
+
+                print(
+                    "Tests failed."
+                )
 
             except FileNotFoundError:
 
-                continue
+                print()
+
+                print(
+                    f"Command not found: {' '.join(command)}"
+                )
 
             except subprocess.TimeoutExpired:
 
                 print()
 
                 print(
+                    "Test execution timed out."
+                )
+
+                state.tests_passed = False
+
+                state.test_output = (
                     "Tests timed out."
                 )
 
-                break
+                return state
 
             except Exception as ex:
 
                 print(ex)
 
-                break
+                state.tests_passed = False
+
+                state.test_output = str(ex)
+
+                return state
 
         state.tests_passed = False
 
         return state
 
+    # ---------------------------------------------------------
+    # Detect Test Framework
+    # ---------------------------------------------------------
+
+    def detect_test_commands(
+        self,
+        repository,
+    ):
+
+        commands = []
+
+        #
+        # Python
+        #
+
+        if os.path.exists(
+
+            os.path.join(
+                repository,
+                "pytest.ini",
+            )
+
+        ):
+
+            commands.append(
+                [
+                    "pytest",
+                ]
+            )
+
+        if os.path.exists(
+
+            os.path.join(
+                repository,
+                "requirements.txt",
+            )
+
+        ):
+
+            commands.append(
+                [
+                    "python",
+                    "-m",
+                    "pytest",
+                ]
+            )
+
+        #
+        # Node
+        #
+
+        if os.path.exists(
+
+            os.path.join(
+                repository,
+                "package.json",
+            )
+
+        ):
+
+            commands.append(
+                [
+                    "npm",
+                    "test",
+                ]
+            )
+
+        #
+        # Maven
+        #
+
+        if os.path.exists(
+
+            os.path.join(
+                repository,
+                "pom.xml",
+            )
+
+        ):
+
+            commands.append(
+                [
+                    "mvn",
+                    "test",
+                ]
+            )
+
+        #
+        # Gradle
+        #
+
+        if os.path.exists(
+
+            os.path.join(
+                repository,
+                "build.gradle",
+            )
+
+        ):
+
+            commands.append(
+                [
+                    "gradle",
+                    "test",
+                ]
+            )
+
+        return commands
+    
+    # ---------------------------------------------------------
+    # Print Summary
     # ---------------------------------------------------------
 
     def print_summary(
@@ -158,7 +305,7 @@ class TesterAgent:
         print("=" * 70)
 
         print(
-            "Passed :",
+            "Tests Passed :",
             getattr(
                 state,
                 "tests_passed",
@@ -166,14 +313,153 @@ class TesterAgent:
             ),
         )
 
-        if hasattr(
-            state,
-            "test_command",
-        ):
+        print(
+            "Command :",
+            getattr(
+                state,
+                "test_command",
+                "Not Executed",
+            ),
+        )
 
-            print(
-                "Command :",
-                state.test_command,
-            )
+        output = getattr(
+            state,
+            "test_output",
+            "",
+        )
+
+        if output:
+
+            print()
+
+            print("Output")
+
+            print("-" * 70)
+
+            #
+            # Prevent extremely large console output.
+            #
+
+            if len(output) > 5000:
+
+                print(
+                    output[:5000]
+                )
+
+                print()
+
+                print(
+                    "... Output Truncated ..."
+                )
+
+            else:
+
+                print(output)
 
         print("=" * 70)
+
+    # ---------------------------------------------------------
+    # Test Report
+    # ---------------------------------------------------------
+
+    def generate_report(
+        self,
+        state,
+    ):
+
+        report = {
+
+            "tests_passed": getattr(
+                state,
+                "tests_passed",
+                False,
+            ),
+
+            "command": getattr(
+                state,
+                "test_command",
+                "",
+            ),
+
+            "output": getattr(
+                state,
+                "test_output",
+                "",
+            ),
+
+        }
+
+        return report
+
+    # ---------------------------------------------------------
+    # Save Report
+    # ---------------------------------------------------------
+
+    def save_report(
+        self,
+        state,
+        filename="test_report.txt",
+    ):
+
+        report = self.generate_report(
+            state
+        )
+
+        repository = getattr(
+            state,
+            "local_path",
+            "",
+        )
+
+        if not repository:
+
+            return
+
+        report_path = os.path.join(
+            repository,
+            filename,
+        )
+
+        with open(
+            report_path,
+            "w",
+            encoding="utf-8",
+        ) as file:
+
+            file.write(
+                "=" * 70 + "\n"
+            )
+
+            file.write(
+                "AUTONOMOUS TEST REPORT\n"
+            )
+
+            file.write(
+                "=" * 70 + "\n\n"
+            )
+
+            file.write(
+                f"Passed : {report['tests_passed']}\n\n"
+            )
+
+            file.write(
+                f"Command : {report['command']}\n\n"
+            )
+
+            file.write(
+                "Output\n"
+            )
+
+            file.write(
+                "-" * 70 + "\n"
+            )
+
+            file.write(
+                report["output"]
+            )
+
+        print()
+
+        print(
+            f"Test report saved to {report_path}"
+        )    
