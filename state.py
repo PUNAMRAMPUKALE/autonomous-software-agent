@@ -35,3 +35,9 @@ class AgentState:
     project_structure: list = field(default_factory=list)
 
     implementation_plan: list = field(default_factory=list)
+
+    source_files: list = field(default_factory=list)
+
+    context: str = ""
+
+    llm_prompt: str = ""

@@ -1,13 +1,16 @@
-from agents.github_agent import GitHubAgent
 from agents.planner import PlannerAgent
+from agents.github_agent import GitHubAgent
 from agents.repository_analyzer import RepositoryAnalyzer
+from agents.developer_agent import DeveloperAgent
 
 
 def main():
 
-    print("=" * 60)
+    print("=" * 70)
     print("AUTONOMOUS SOFTWARE ENGINEERING AGENT")
-    print("=" * 60)
+    print("=" * 70)
+
+    # --------------------------------------------------
 
     planner = PlannerAgent()
 
@@ -16,51 +19,63 @@ def main():
     if state is None:
         return
 
+    # --------------------------------------------------
+
     github = GitHubAgent()
 
-    state = github.prepare_repository(state)
+    state = github.prepare_repository(
+        state
+    )
+
+    # --------------------------------------------------
 
     analyzer = RepositoryAnalyzer()
 
-    state = analyzer.analyze(state)
+    state = analyzer.analyze(
+        state
+    )
+
+    # --------------------------------------------------
+
+    developer = DeveloperAgent()
+
+    state = developer.prepare_task(
+        state
+    )
+
+    # --------------------------------------------------
+
+    planner.print_selected_story(
+        state
+    )
+
+    developer.preview_prompt(
+        state
+    )
+
+    # --------------------------------------------------
 
     print()
 
-    planner.print_selected_story(state)
+    print("=" * 70)
 
-    print()
+    print("PROJECT SUMMARY")
 
-    print("=" * 60)
+    print("=" * 70)
+
+    print("Issue :", state.issue_key)
 
     print("Repository :", state.repository)
 
-    print("Language   :", state.language)
+    print("Language :", state.language)
 
-    print("Framework  :", state.framework)
+    print("Framework :", state.framework)
 
-    print("Tests      :", state.test_framework)
+    print("Entry Point :", state.entry_point)
 
-    print("Entry      :", state.entry_point)
+    print("Files :", len(state.source_files))
 
-    print("README     :", state.readme)
-
-    print()
-
-    print("Project Structure")
-
-    for folder in state.project_structure:
-
-        print("-", folder)
-
-    print()
-
-    print("Implementation Plan")
-
-    for step in state.implementation_plan:
-
-        print("-", step)
-
-    print("=" * 60)
+    print("=" * 70)
 
 
 if __name__ == "__main__":
