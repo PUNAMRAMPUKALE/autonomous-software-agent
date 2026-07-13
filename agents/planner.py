@@ -12,7 +12,7 @@ class PlannerAgent:
 
         issues = self.jira.get_todo_issues()
 
-        if len(issues) == 0:
+        if not issues:
 
             print("No stories available.")
 
@@ -27,21 +27,39 @@ class PlannerAgent:
             "In Progress",
         )
 
-        issue = self.jira.get_issue(issue.key)
+        issue = self.jira.get_issue(
+            issue.key,
+        )
 
         state = AgentState()
 
         state.issue_key = issue.key
+
+        state.project_key = (
+            issue.key.split("-")[0]
+        )
+
         state.summary = issue.fields.summary
-        state.description = issue.fields.description
-        state.status = issue.fields.status.name
+
+        state.description = (
+            issue.fields.description
+        )
+
+        state.status = (
+            issue.fields.status.name
+        )
 
         return state
 
-    def print_selected_story(self, state):
+    def print_selected_story(
+        self,
+        state,
+    ):
 
         issue = self.jira.get_issue(
             state.issue_key,
         )
 
-        self.jira.print_issue(issue)
+        self.jira.print_issue(
+            issue,
+        )
