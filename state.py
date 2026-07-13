@@ -6,6 +6,10 @@ from models.symbol import Symbol
 @dataclass
 class AgentState:
 
+    # --------------------------------------------------
+    # Jira
+    # --------------------------------------------------
+
     issue_key: str = ""
 
     project_key: str = ""
@@ -16,6 +20,10 @@ class AgentState:
 
     status: str = ""
 
+    # --------------------------------------------------
+    # Repository
+    # --------------------------------------------------
+
     repository: str = ""
 
     branch: str = ""
@@ -23,6 +31,10 @@ class AgentState:
     local_path: str = ""
 
     feature_branch: str = ""
+
+    # --------------------------------------------------
+    # Repository Analysis
+    # --------------------------------------------------
 
     language: str = ""
 
@@ -34,14 +46,36 @@ class AgentState:
 
     readme: bool = False
 
-    project_structure: list = field(default_factory=list)
+    project_structure: list = field(
+        default_factory=list
+    )
 
-    implementation_plan: list = field(default_factory=list)
+    implementation_plan: list = field(
+        default_factory=list
+    )
 
-    source_files: list = field(default_factory=list)
+    # --------------------------------------------------
+    # Files
+    # --------------------------------------------------
+
+    source_files: list = field(
+        default_factory=list
+    )
 
     context: str = ""
 
     llm_prompt: str = ""
 
-    symbols: list[Symbol] = field(default_factory=list)
+    # --------------------------------------------------
+    # Repository Index
+    # --------------------------------------------------
+
+    symbols: list[Symbol] = field(
+        default_factory=list
+    )
+
+    repository_graph = None
+
+    relevant_symbols: list[Symbol] = field(
+        default_factory=list
+    )
