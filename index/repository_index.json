@@ -3,55 +3,59 @@
         "name": "PlannerAgent",
         "type": "class",
         "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\agents\\planner.py",
-        "start_line": 5,
-        "end_line": 47,
+        "start_line": 6,
+        "end_line": 80,
         "parent": "",
         "docstring": "",
         "imports": [
+            "tools.jira_tool",
             "state",
-            "tools.jira_tool"
+            "tools.git_tool"
         ],
         "calls": [],
         "decorators": [],
         "base_classes": [],
         "language": "Python",
         "complexity": 0,
-        "hash": "71a03c2bd20579ee6517b3530c06bcb3b9e390344381b43875957510081e7f2d",
+        "hash": "735b9ea0af3f7bcf48cbe1571cee9f2e79dd59c1fdf893c99b8dff71da507d43",
         "symbol_id": "workspace\\autonomous-software-agent\\agents\\planner.py::PlannerAgent"
     },
     {
         "name": "__init__",
         "type": "function",
         "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\agents\\planner.py",
-        "start_line": 7,
-        "end_line": 9,
+        "start_line": 8,
+        "end_line": 11,
         "parent": "PlannerAgent",
         "docstring": "",
         "imports": [
+            "tools.jira_tool",
             "state",
-            "tools.jira_tool"
+            "tools.git_tool"
         ],
         "calls": [
-            "JiraTool"
+            "JiraTool",
+            "GitTool"
         ],
         "decorators": [],
         "base_classes": [],
         "language": "Python",
         "complexity": 0,
-        "hash": "9809e43c38534aba75913f6c038553fb25e82bcbe6cdfa92a6e66d7cd5475070",
+        "hash": "ff77e9ab2d5319e4bc866b102d547cef105bc950635b33692d3cdf78dd4fd8ec",
         "symbol_id": "workspace\\autonomous-software-agent\\agents\\planner.py::PlannerAgent.__init__"
     },
     {
         "name": "choose_next_story",
         "type": "function",
         "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\agents\\planner.py",
-        "start_line": 11,
-        "end_line": 39,
+        "start_line": 13,
+        "end_line": 60,
         "parent": "PlannerAgent",
         "docstring": "",
         "imports": [
+            "tools.jira_tool",
             "state",
-            "tools.jira_tool"
+            "tools.git_tool"
         ],
         "calls": [
             "self.jira.get_todo_issues",
@@ -59,27 +63,40 @@
             "self.jira.move_issue",
             "self.jira.get_issue",
             "AgentState",
+            "self._extract_repo_url",
             "len",
+            "print",
+            "print",
+            "self.git.clone",
+            "print",
+            "self.git.default_branch",
+            "print",
+            "self.git.checkout",
+            "self.git.pull",
+            "self.git.build",
+            "print",
+            "print",
             "print"
         ],
         "decorators": [],
         "base_classes": [],
         "language": "Python",
         "complexity": 0,
-        "hash": "3137b09307069967035c22627b01a1dccd1f9a964f8fd7c4666e249800fc82b6",
+        "hash": "077aba2477749ed66df11ed5821b85beb5e53358597ac99b947cc82e61f9981b",
         "symbol_id": "workspace\\autonomous-software-agent\\agents\\planner.py::PlannerAgent.choose_next_story"
     },
     {
         "name": "print_selected_story",
         "type": "function",
         "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\agents\\planner.py",
-        "start_line": 41,
-        "end_line": 47,
+        "start_line": 62,
+        "end_line": 68,
         "parent": "PlannerAgent",
         "docstring": "",
         "imports": [
+            "tools.jira_tool",
             "state",
-            "tools.jira_tool"
+            "tools.git_tool"
         ],
         "calls": [
             "self.jira.get_issue",
@@ -91,6 +108,32 @@
         "complexity": 0,
         "hash": "49064f843083cb5e63534084ed47a6c16238d994d885e4d694616448a5aaea89",
         "symbol_id": "workspace\\autonomous-software-agent\\agents\\planner.py::PlannerAgent.print_selected_story"
+    },
+    {
+        "name": "_extract_repo_url",
+        "type": "function",
+        "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\agents\\planner.py",
+        "start_line": 70,
+        "end_line": 80,
+        "parent": "PlannerAgent",
+        "docstring": "",
+        "imports": [
+            "tools.jira_tool",
+            "state",
+            "tools.git_tool"
+        ],
+        "calls": [
+            "text.replace('\\n', ' ').split",
+            "t.startswith",
+            "text.replace",
+            "t.strip"
+        ],
+        "decorators": [],
+        "base_classes": [],
+        "language": "Python",
+        "complexity": 0,
+        "hash": "b179bb436dfcaa4b1b772cf807f5b4bbfeb5ee5e78e2a4a698366872b7d781ff",
+        "symbol_id": "workspace\\autonomous-software-agent\\agents\\planner.py::PlannerAgent._extract_repo_url"
     },
     {
         "name": "main",
@@ -121,34 +164,363 @@
         "name": "AgentState",
         "type": "class",
         "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\state.py",
-        "start_line": 5,
-        "end_line": 13,
+        "start_line": 1,
+        "end_line": 9,
         "parent": "",
         "docstring": "",
-        "imports": [
-            "dataclasses"
-        ],
+        "imports": [],
         "calls": [],
-        "decorators": [
-            "dataclass"
-        ],
+        "decorators": [],
         "base_classes": [],
         "language": "Python",
         "complexity": 0,
-        "hash": "3741a4678978cdf619877e2006db08410f3e7e55b3b9baa04b3466faf0397c93",
+        "hash": "6420d416d6c5f437e2019c8da69b81f63be13b3d14ea8b9bdb6b362c3d2f5d9e",
         "symbol_id": "workspace\\autonomous-software-agent\\state.py::AgentState"
+    },
+    {
+        "name": "GitError",
+        "type": "class",
+        "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\git_tool.py",
+        "start_line": 6,
+        "end_line": 7,
+        "parent": "",
+        "docstring": "",
+        "imports": [
+            "os",
+            "subprocess",
+            "typing"
+        ],
+        "calls": [],
+        "decorators": [],
+        "base_classes": [
+            "Exception"
+        ],
+        "language": "Python",
+        "complexity": 0,
+        "hash": "d54198237d9a9935a96d3c86dc8094b4bacd5aeca02967bd90fbcf9237c3bf24",
+        "symbol_id": "workspace\\autonomous-software-agent\\tools\\git_tool.py::GitError"
+    },
+    {
+        "name": "GitTool",
+        "type": "class",
+        "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\git_tool.py",
+        "start_line": 10,
+        "end_line": 151,
+        "parent": "",
+        "docstring": "",
+        "imports": [
+            "os",
+            "subprocess",
+            "typing"
+        ],
+        "calls": [],
+        "decorators": [],
+        "base_classes": [],
+        "language": "Python",
+        "complexity": 0,
+        "hash": "734a99240c8502dfc91c0e19fda40dcb7d2ac7a2864ed0752027c2139fc70844",
+        "symbol_id": "workspace\\autonomous-software-agent\\tools\\git_tool.py::GitTool"
+    },
+    {
+        "name": "__init__",
+        "type": "function",
+        "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\git_tool.py",
+        "start_line": 11,
+        "end_line": 13,
+        "parent": "GitTool",
+        "docstring": "",
+        "imports": [
+            "os",
+            "subprocess",
+            "typing"
+        ],
+        "calls": [
+            "os.makedirs"
+        ],
+        "decorators": [],
+        "base_classes": [],
+        "language": "Python",
+        "complexity": 0,
+        "hash": "cc2739fc1ffb2bfc091e26f8188277fce0b44a3256fb8662ad99fa91e5320eb6",
+        "symbol_id": "workspace\\autonomous-software-agent\\tools\\git_tool.py::GitTool.__init__"
+    },
+    {
+        "name": "_run",
+        "type": "function",
+        "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\git_tool.py",
+        "start_line": 15,
+        "end_line": 24,
+        "parent": "GitTool",
+        "docstring": "",
+        "imports": [
+            "os",
+            "subprocess",
+            "typing"
+        ],
+        "calls": [
+            "subprocess.Popen",
+            "proc.communicate",
+            "out.strip",
+            "err.strip"
+        ],
+        "decorators": [],
+        "base_classes": [],
+        "language": "Python",
+        "complexity": 0,
+        "hash": "9490c466505d21ef4379b50287048dc9f005f89773b105e6e9f804c5a3d63935",
+        "symbol_id": "workspace\\autonomous-software-agent\\tools\\git_tool.py::GitTool._run"
+    },
+    {
+        "name": "_build_auth_url",
+        "type": "function",
+        "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\git_tool.py",
+        "start_line": 26,
+        "end_line": 33,
+        "parent": "GitTool",
+        "docstring": "",
+        "imports": [
+            "os",
+            "subprocess",
+            "typing"
+        ],
+        "calls": [
+            "os.environ.get",
+            "repo_url.startswith",
+            "repo_url.replace"
+        ],
+        "decorators": [],
+        "base_classes": [],
+        "language": "Python",
+        "complexity": 0,
+        "hash": "2b91b4b74f069b123f6e80db7de4ee52f94198ec3d604a9856ed6d41e864da80",
+        "symbol_id": "workspace\\autonomous-software-agent\\tools\\git_tool.py::GitTool._build_auth_url"
+    },
+    {
+        "name": "clone",
+        "type": "function",
+        "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\git_tool.py",
+        "start_line": 35,
+        "end_line": 50,
+        "parent": "GitTool",
+        "docstring": "",
+        "imports": [
+            "os",
+            "subprocess",
+            "typing"
+        ],
+        "calls": [
+            "self._build_auth_url",
+            "os.path.join",
+            "os.path.isdir",
+            "self._run",
+            "GitError",
+            "self._infer_name",
+            "os.path.join",
+            "self.set_remote_url",
+            "GitError"
+        ],
+        "decorators": [],
+        "base_classes": [],
+        "language": "Python",
+        "complexity": 0,
+        "hash": "f69ec03625fb22acbad34797c1146159b28cd6f6623efff97781b881b1efc182",
+        "symbol_id": "workspace\\autonomous-software-agent\\tools\\git_tool.py::GitTool.clone"
+    },
+    {
+        "name": "set_remote_url",
+        "type": "function",
+        "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\git_tool.py",
+        "start_line": 52,
+        "end_line": 55,
+        "parent": "GitTool",
+        "docstring": "",
+        "imports": [
+            "os",
+            "subprocess",
+            "typing"
+        ],
+        "calls": [
+            "self._run",
+            "GitError"
+        ],
+        "decorators": [],
+        "base_classes": [],
+        "language": "Python",
+        "complexity": 0,
+        "hash": "1fb4a32fab16118b1402bf573ea6f7497adfd5261e04951fb9c9e74e41a6cf36",
+        "symbol_id": "workspace\\autonomous-software-agent\\tools\\git_tool.py::GitTool.set_remote_url"
+    },
+    {
+        "name": "default_branch",
+        "type": "function",
+        "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\git_tool.py",
+        "start_line": 57,
+        "end_line": 82,
+        "parent": "GitTool",
+        "docstring": "",
+        "imports": [
+            "os",
+            "subprocess",
+            "typing"
+        ],
+        "calls": [
+            "self._run",
+            "self._run",
+            "GitError",
+            "out.splitlines",
+            "self._run",
+            "out.split",
+            "line.startswith",
+            "line.split",
+            "len",
+            "ref.split"
+        ],
+        "decorators": [],
+        "base_classes": [],
+        "language": "Python",
+        "complexity": 0,
+        "hash": "cbb1847a91f072554ea2bd3a07b97f144487c9581f2d2e5120f4c1769215110c",
+        "symbol_id": "workspace\\autonomous-software-agent\\tools\\git_tool.py::GitTool.default_branch"
+    },
+    {
+        "name": "checkout",
+        "type": "function",
+        "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\git_tool.py",
+        "start_line": 84,
+        "end_line": 90,
+        "parent": "GitTool",
+        "docstring": "",
+        "imports": [
+            "os",
+            "subprocess",
+            "typing"
+        ],
+        "calls": [
+            "self._run",
+            "self._run",
+            "GitError"
+        ],
+        "decorators": [],
+        "base_classes": [],
+        "language": "Python",
+        "complexity": 0,
+        "hash": "0ea9a568c8f2cd1fb772671325842db36aac1eca42254c81549f21f7f077e6e8",
+        "symbol_id": "workspace\\autonomous-software-agent\\tools\\git_tool.py::GitTool.checkout"
+    },
+    {
+        "name": "pull",
+        "type": "function",
+        "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\git_tool.py",
+        "start_line": 92,
+        "end_line": 95,
+        "parent": "GitTool",
+        "docstring": "",
+        "imports": [
+            "os",
+            "subprocess",
+            "typing"
+        ],
+        "calls": [
+            "self._run",
+            "GitError"
+        ],
+        "decorators": [],
+        "base_classes": [],
+        "language": "Python",
+        "complexity": 0,
+        "hash": "4ce8329343e735419d13feb6e34aa0421cd6c12bb1f82b62d4736917c62c249b",
+        "symbol_id": "workspace\\autonomous-software-agent\\tools\\git_tool.py::GitTool.pull"
+    },
+    {
+        "name": "build",
+        "type": "function",
+        "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\git_tool.py",
+        "start_line": 97,
+        "end_line": 145,
+        "parent": "GitTool",
+        "docstring": "",
+        "imports": [
+            "os",
+            "subprocess",
+            "typing"
+        ],
+        "calls": [
+            "os.path.isfile",
+            "os.path.isfile",
+            "os.path.join",
+            "os.path.isfile",
+            "os.path.isfile",
+            "os.path.join",
+            "self._run",
+            "os.path.join",
+            "os.path.isfile",
+            "self._run",
+            "self._run",
+            "os.path.join",
+            "os.path.join",
+            "os.path.isfile",
+            "os.path.isfile",
+            "os.path.isfile",
+            "os.path.isfile",
+            "self._run",
+            "os.path.join",
+            "self._run",
+            "os.path.join",
+            "self._run",
+            "self._run",
+            "self._run",
+            "self._run",
+            "os.path.join",
+            "os.path.join",
+            "os.path.isfile",
+            "os.path.isfile",
+            "os.path.join",
+            "os.path.join",
+            "mvn.endswith"
+        ],
+        "decorators": [],
+        "base_classes": [],
+        "language": "Python",
+        "complexity": 0,
+        "hash": "6a01b2d1697ab3ec2ec42e2bbcabfb27cca8c92e0d82e82e6aff57e475c86e54",
+        "symbol_id": "workspace\\autonomous-software-agent\\tools\\git_tool.py::GitTool.build"
+    },
+    {
+        "name": "_infer_name",
+        "type": "function",
+        "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\git_tool.py",
+        "start_line": 147,
+        "end_line": 151,
+        "parent": "GitTool",
+        "docstring": "",
+        "imports": [
+            "os",
+            "subprocess",
+            "typing"
+        ],
+        "calls": [
+            "name.endswith",
+            "repo_url.rstrip('/').split",
+            "repo_url.rstrip"
+        ],
+        "decorators": [],
+        "base_classes": [],
+        "language": "Python",
+        "complexity": 0,
+        "hash": "5fc382a5aff4e783e977dd19b28e4ae5c41f56467f21f5178589c89a16f29e58",
+        "symbol_id": "workspace\\autonomous-software-agent\\tools\\git_tool.py::GitTool._infer_name"
     },
     {
         "name": "JiraTool",
         "type": "class",
         "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\jira_tool.py",
-        "start_line": 11,
-        "end_line": 79,
+        "start_line": 10,
+        "end_line": 78,
         "parent": "",
         "docstring": "",
         "imports": [
             "jira",
-            "config"
+            "os"
         ],
         "calls": [],
         "decorators": [],
@@ -162,13 +534,13 @@
         "name": "__init__",
         "type": "function",
         "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\jira_tool.py",
-        "start_line": 13,
-        "end_line": 18,
+        "start_line": 12,
+        "end_line": 17,
         "parent": "JiraTool",
         "docstring": "",
         "imports": [
             "jira",
-            "config"
+            "os"
         ],
         "calls": [
             "JIRA"
@@ -184,13 +556,13 @@
         "name": "get_todo_issues",
         "type": "function",
         "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\jira_tool.py",
-        "start_line": 20,
-        "end_line": 28,
+        "start_line": 19,
+        "end_line": 27,
         "parent": "JiraTool",
         "docstring": "",
         "imports": [
             "jira",
-            "config"
+            "os"
         ],
         "calls": [
             "self.client.search_issues"
@@ -206,13 +578,13 @@
         "name": "get_issue",
         "type": "function",
         "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\jira_tool.py",
-        "start_line": 30,
-        "end_line": 32,
+        "start_line": 29,
+        "end_line": 31,
         "parent": "JiraTool",
         "docstring": "",
         "imports": [
             "jira",
-            "config"
+            "os"
         ],
         "calls": [
             "self.client.issue"
@@ -228,13 +600,13 @@
         "name": "print_issue",
         "type": "function",
         "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\jira_tool.py",
-        "start_line": 34,
-        "end_line": 45,
+        "start_line": 33,
+        "end_line": 44,
         "parent": "JiraTool",
         "docstring": "",
         "imports": [
             "jira",
-            "config"
+            "os"
         ],
         "calls": [
             "print",
@@ -259,13 +631,13 @@
         "name": "get_transition_id",
         "type": "function",
         "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\jira_tool.py",
-        "start_line": 47,
-        "end_line": 56,
+        "start_line": 46,
+        "end_line": 55,
         "parent": "JiraTool",
         "docstring": "",
         "imports": [
             "jira",
-            "config"
+            "os"
         ],
         "calls": [
             "self.client.transitions",
@@ -283,13 +655,13 @@
         "name": "move_issue",
         "type": "function",
         "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\jira_tool.py",
-        "start_line": 58,
-        "end_line": 79,
+        "start_line": 57,
+        "end_line": 78,
         "parent": "JiraTool",
         "docstring": "",
         "imports": [
             "jira",
-            "config"
+            "os"
         ],
         "calls": [
             "self.get_issue",

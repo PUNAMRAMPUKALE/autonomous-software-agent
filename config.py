@@ -1,9 +1,8 @@
 """
 config.py
 
-Purpose
--------
-Central configuration for the Autonomous Software Engineering Agent.
+Milestone 10
+Global Configuration
 """
 
 import os
@@ -13,22 +12,19 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # ==========================================================
-# Jira Configuration
+# Jira
 # ==========================================================
 
 JIRA_URL = os.getenv(
-    "JIRA_URL",
-    "",
+    "JIRA_URL"
 )
 
 JIRA_EMAIL = os.getenv(
-    "JIRA_EMAIL",
-    "",
+    "JIRA_EMAIL"
 )
 
 JIRA_API_TOKEN = os.getenv(
-    "JIRA_API_TOKEN",
-    "",
+    "JIRA_API_TOKEN"
 )
 
 PROJECT_KEY = os.getenv(
@@ -37,13 +33,64 @@ PROJECT_KEY = os.getenv(
 )
 
 # ==========================================================
-# GitHub Configuration
+# LLM
+# ==========================================================
+
+LLM_PROVIDER = os.getenv(
+    "LLM_PROVIDER",
+    "openai",
+).lower()
+
+LLM_MODEL = os.getenv(
+    "LLM_MODEL",
+    "gpt-4.1-mini",
+)
+
+# ==========================================================
+# API Keys
+# ==========================================================
+
+OPENAI_API_KEY = os.getenv(
+    "OPENAI_API_KEY"
+)
+
+ANTHROPIC_API_KEY = os.getenv(
+    "ANTHROPIC_API_KEY"
+)
+
+GOOGLE_API_KEY = os.getenv(
+    "GOOGLE_API_KEY"
+)
+
+OLLAMA_HOST = os.getenv(
+    "OLLAMA_HOST",
+    "http://localhost:11434",
+)
+
+# ==========================================================
+# GitHub
 # ==========================================================
 
 GITHUB_TOKEN = os.getenv(
-    "GITHUB_TOKEN",
-    "",
+    "GITHUB_TOKEN"
 )
+
+# ==========================================================
+# Slack
+# ==========================================================
+
+SLACK_BOT_TOKEN = os.getenv(
+    "SLACK_BOT_TOKEN"
+)
+
+SLACK_CHANNEL = os.getenv(
+    "SLACK_CHANNEL",
+    "#general",
+)
+
+# ==========================================================
+# Repository Mapping
+# ==========================================================
 
 PROJECT_REPOSITORIES = {
 
@@ -56,88 +103,3 @@ PROJECT_REPOSITORIES = {
     }
 
 }
-
-# ==========================================================
-# LLM Configuration
-# ==========================================================
-
-LLM_PROVIDER = os.getenv(
-    "LLM_PROVIDER",
-    "mock",
-)
-
-LLM_MODEL = os.getenv(
-    "LLM_MODEL",
-    "",
-)
-
-ANTHROPIC_API_KEY = os.getenv(
-    "ANTHROPIC_API_KEY",
-    "",
-)
-
-OPENAI_API_KEY = os.getenv(
-    "OPENAI_API_KEY",
-    "",
-)
-
-GOOGLE_API_KEY = os.getenv(
-    "GOOGLE_API_KEY",
-    "",
-)
-
-OLLAMA_HOST = os.getenv(
-    "OLLAMA_HOST",
-    "http://localhost:11434",
-)
-
-# ==========================================================
-# Workspace Configuration
-# ==========================================================
-
-WORKSPACE = os.getenv(
-    "WORKSPACE",
-    "workspace",
-)
-
-DEFAULT_BRANCH = os.getenv(
-    "DEFAULT_BRANCH",
-    "main",
-)
-
-# ==========================================================
-# Runtime Configuration
-# ==========================================================
-
-LOG_LEVEL = os.getenv(
-    "LOG_LEVEL",
-    "INFO",
-)
-
-MAX_PROMPT_LENGTH = int(
-    os.getenv(
-        "MAX_PROMPT_LENGTH",
-        "50000",
-    )
-)
-
-MAX_RESPONSE_LENGTH = int(
-    os.getenv(
-        "MAX_RESPONSE_LENGTH",
-        "8000",
-    )
-)
-
-TEMPERATURE = float(
-    os.getenv(
-        "TEMPERATURE",
-        "0",
-    )
-)
-
-MAX_TOKENS = int(
-    os.getenv(
-        "MAX_TOKENS",
-        "4096",
-    )
-)

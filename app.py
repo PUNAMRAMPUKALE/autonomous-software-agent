@@ -128,8 +128,8 @@ def main():
     #
 
     coding = CodingAgent(
-    provider=LLM_PROVIDER
-)
+        provider=LLM_PROVIDER
+    )
 
     state = coding.generate(
         state

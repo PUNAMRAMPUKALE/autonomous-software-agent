@@ -21,8 +21,6 @@ class AgentState:
     description: str = ""
 
     status: str = ""
-    
-    patch: CodePatch | None = None
 
     # --------------------------------------------------
     # Repository
@@ -30,9 +28,11 @@ class AgentState:
 
     repository: str = ""
 
-    branch: str = ""
+    repository_path: str = ""
 
     local_path: str = ""
+
+    branch: str = ""
 
     feature_branch: str = ""
 
@@ -59,18 +59,24 @@ class AgentState:
     )
 
     # --------------------------------------------------
-    # Files
+    # Source Files
     # --------------------------------------------------
 
     source_files: list = field(
         default_factory=list
     )
 
+    # --------------------------------------------------
+    # Prompt / Context
+    # --------------------------------------------------
+
     context: str = ""
 
     llm_prompt: str = ""
-    
+
     generated_code: str = ""
+
+    review: str = ""
 
     # --------------------------------------------------
     # Repository Index
@@ -85,3 +91,43 @@ class AgentState:
     relevant_symbols: list[Symbol] = field(
         default_factory=list
     )
+
+    # --------------------------------------------------
+    # Patch
+    # --------------------------------------------------
+
+    patch: CodePatch | None = None
+
+    # --------------------------------------------------
+    # Review
+    # --------------------------------------------------
+
+    review_passed: bool = False
+
+    # --------------------------------------------------
+    # Testing
+    # --------------------------------------------------
+
+    tests_passed: bool = False
+
+    test_command: str = ""
+
+    test_output: str = ""
+
+    # --------------------------------------------------
+    # Git
+    # --------------------------------------------------
+
+    commit_hash: str = ""
+
+    commit_message: str = ""
+
+    # --------------------------------------------------
+    # Workflow
+    # --------------------------------------------------
+
+    workflow_status: str = "Pending"
+
+    workflow_error: str = ""
+
+    completed: bool = False
