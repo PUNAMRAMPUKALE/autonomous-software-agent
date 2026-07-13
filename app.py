@@ -2,6 +2,7 @@ from agents.planner import PlannerAgent
 from agents.github_agent import GitHubAgent
 from agents.repository_analyzer import RepositoryAnalyzer
 from agents.developer_agent import DeveloperAgent
+from agents.indexing_agent import IndexingAgent
 
 
 def main():
@@ -10,8 +11,6 @@ def main():
     print("AUTONOMOUS SOFTWARE ENGINEERING AGENT")
     print("=" * 70)
 
-    # --------------------------------------------------
-
     planner = PlannerAgent()
 
     state = planner.choose_next_story()
@@ -19,61 +18,40 @@ def main():
     if state is None:
         return
 
-    # --------------------------------------------------
-
     github = GitHubAgent()
 
-    state = github.prepare_repository(
-        state
-    )
-
-    # --------------------------------------------------
+    state = github.prepare_repository(state)
 
     analyzer = RepositoryAnalyzer()
 
-    state = analyzer.analyze(
-        state
-    )
-
-    # --------------------------------------------------
+    state = analyzer.analyze(state)
 
     developer = DeveloperAgent()
 
-    state = developer.prepare_task(
-        state
-    )
+    state = developer.prepare_task(state)
 
-    # --------------------------------------------------
+    indexer = IndexingAgent()
 
-    planner.print_selected_story(
-        state
-    )
+    state = indexer.build_index(state)
 
-    developer.preview_prompt(
-        state
-    )
+    planner.print_selected_story(state)
 
-    # --------------------------------------------------
+    developer.preview_prompt(state)
 
     print()
 
     print("=" * 70)
 
-    print("PROJECT SUMMARY")
+    print("REPOSITORY SUMMARY")
 
     print("=" * 70)
 
-    print("Issue :", state.issue_key)
-
-    print("Repository :", state.repository)
-
-    print("Language :", state.language)
-
-    print("Framework :", state.framework)
-
-    print("Entry Point :", state.entry_point)
-
-    print("Files :", len(state.source_files))
+    print(f"Issue              : {state.issue_key}")
+    print(f"Language           : {state.language}")
+    print(f"Framework          : {state.framework}")
+    print(f"Entry Point        : {state.entry_point}")
+    print(f"Source Files       : {len(state.source_files)}")
+    print(f"Indexed Symbols    : {len(state.symbols)}")
 
     print("=" * 70)
 

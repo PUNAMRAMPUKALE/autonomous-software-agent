@@ -1,5 +1,7 @@
 from dataclasses import dataclass, field
 
+from models.symbol import Symbol
+
 
 @dataclass
 class AgentState:
@@ -41,3 +43,5 @@ class AgentState:
     context: str = ""
 
     llm_prompt: str = ""
+
+    symbols: list[Symbol] = field(default_factory=list)

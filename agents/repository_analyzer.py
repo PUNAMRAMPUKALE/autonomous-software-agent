@@ -10,17 +10,11 @@ class RepositoryAnalyzer:
         print("\n========== Repository Analyzer ==========\n")
 
         state.language = self.detect_language(repo)
-
         state.framework = self.detect_framework(repo)
-
         state.entry_point = self.find_entry_point(repo)
-
         state.test_framework = self.detect_test_framework(repo)
-
         state.readme = self.find_readme(repo)
-
         state.project_structure = self.project_structure(repo)
-
         state.implementation_plan = self.create_plan(state)
 
         return state
@@ -54,19 +48,19 @@ class RepositoryAnalyzer:
             if "go.mod" in files:
                 return "Go"
 
-            if any(f.endswith(".py") for f in files):
+            if any(file.endswith(".py") for file in files):
                 return "Python"
 
-            if any(f.endswith(".js") for f in files):
+            if any(file.endswith(".js") for file in files):
                 return "JavaScript"
 
-            if any(f.endswith(".ts") for f in files):
+            if any(file.endswith(".ts") for file in files):
                 return "TypeScript"
 
-            if any(f.endswith(".java") for f in files):
+            if any(file.endswith(".java") for file in files):
                 return "Java"
 
-            if any(f.endswith(".cs") for f in files):
+            if any(file.endswith(".cs") for file in files):
                 return ".NET"
 
         return "Unknown"
@@ -78,9 +72,7 @@ class RepositoryAnalyzer:
     def detect_framework(self, repo):
 
         requirements = self.read_file(repo, "requirements.txt")
-
         package = self.read_file(repo, "package.json")
-
         pom = self.read_file(repo, "pom.xml")
 
         if "fastapi" in requirements.lower():
@@ -95,13 +87,13 @@ class RepositoryAnalyzer:
         if "spring-boot" in pom.lower():
             return "Spring Boot"
 
-        if "\"react\"" in package.lower():
+        if '"react"' in package.lower():
             return "React"
 
-        if "\"next\"" in package.lower():
+        if '"next"' in package.lower():
             return "Next.js"
 
-        if "\"express\"" in package.lower():
+        if '"express"' in package.lower():
             return "Express"
 
         if self.detect_language(repo) == "Python":
@@ -110,7 +102,7 @@ class RepositoryAnalyzer:
         return "Unknown"
 
     # -----------------------------------------------------
-    # Test Framework
+    # Test Framework Detection
     # -----------------------------------------------------
 
     def detect_test_framework(self, repo):
@@ -147,23 +139,14 @@ class RepositoryAnalyzer:
     def find_entry_point(self, repo):
 
         candidates = [
-
             "main.py",
-
             "app.py",
-
             "server.py",
-
             "manage.py",
-
             "index.js",
-
             "server.js",
-
             "main.go",
-
             "Program.cs",
-
         ]
 
         for candidate in candidates:
@@ -174,26 +157,21 @@ class RepositoryAnalyzer:
         return "Unknown"
 
     # -----------------------------------------------------
-    # README
+    # README Detection
     # -----------------------------------------------------
 
     def find_readme(self, repo):
 
-        return any(
+        for filename in [
+            "README.md",
+            "README.MD",
+            "README",
+        ]:
 
-            os.path.exists(os.path.join(repo, file))
+            if os.path.exists(os.path.join(repo, filename)):
+                return True
 
-            for file in [
-
-                "README.md",
-
-                "README.MD",
-
-                "README",
-
-            ]
-
-        )
+        return False
 
     # -----------------------------------------------------
     # Project Structure
@@ -202,21 +180,13 @@ class RepositoryAnalyzer:
     def project_structure(self, repo):
 
         ignore = {
-
             ".git",
-
             ".venv",
-
             "__pycache__",
-
-            "workspace",
-
             ".idea",
-
             ".vscode",
-
+            "workspace",
             "node_modules",
-
         }
 
         folders = []
@@ -231,7 +201,7 @@ class RepositoryAnalyzer:
         return folders
 
     # -----------------------------------------------------
-    # Helpers
+    # Helper
     # -----------------------------------------------------
 
     def read_file(self, repo, filename):
@@ -244,11 +214,10 @@ class RepositoryAnalyzer:
 
                 try:
 
-                    with open(path, encoding="utf-8") as f:
-                        return f.read()
+                    with open(path, "r", encoding="utf-8") as file:
+                        return file.read()
 
                 except Exception:
-
                     return ""
 
         return ""
@@ -259,32 +228,22 @@ class RepositoryAnalyzer:
 
     def create_plan(self, state):
 
-        plan = []
-
-        plan.append(
-            "Understand the Jira requirements."
-        )
-
-        plan.append(
-            "Identify affected modules."
-        )
-
-        plan.append(
-            "Implement the requested functionality."
-        )
+        plan = [
+            "Analyze Jira requirements.",
+            "Index repository symbols.",
+            "Identify affected classes and functions.",
+            "Prepare developer context.",
+            "Generate implementation.",
+        ]
 
         if state.test_framework != "Not Configured":
-
             plan.append(
-                f"Run {state.test_framework} tests."
+                f"Run {state.test_framework}."
             )
 
-        plan.append(
-            "Review code quality."
-        )
-
-        plan.append(
-            "Commit changes."
-        )
+        plan.extend([
+            "Review generated code.",
+            "Commit changes.",
+        ])
 
         return plan
