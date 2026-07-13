@@ -1,5 +1,6 @@
 from agents.github_agent import GitHubAgent
 from agents.planner import PlannerAgent
+from agents.repository_analyzer import RepositoryAnalyzer
 
 
 def main():
@@ -17,47 +18,47 @@ def main():
 
     github = GitHubAgent()
 
-    state = github.prepare_repository(
-        state,
-    )
+    state = github.prepare_repository(state)
+
+    analyzer = RepositoryAnalyzer()
+
+    state = analyzer.analyze(state)
 
     print()
 
-    planner.print_selected_story(
-        state,
-    )
+    planner.print_selected_story(state)
 
     print()
 
     print("=" * 60)
 
-    print("PROJECT")
+    print("Repository :", state.repository)
 
-    print(state.project_key)
+    print("Language   :", state.language)
 
-    print()
+    print("Framework  :", state.framework)
 
-    print("REPOSITORY")
+    print("Tests      :", state.test_framework)
 
-    print(state.repository)
+    print("Entry      :", state.entry_point)
 
-    print()
-
-    print("DEFAULT BRANCH")
-
-    print(state.branch)
+    print("README     :", state.readme)
 
     print()
 
-    print("FEATURE BRANCH")
+    print("Project Structure")
 
-    print(state.feature_branch)
+    for folder in state.project_structure:
+
+        print("-", folder)
 
     print()
 
-    print("LOCAL PATH")
+    print("Implementation Plan")
 
-    print(state.local_path)
+    for step in state.implementation_plan:
+
+        print("-", step)
 
     print("=" * 60)
 
