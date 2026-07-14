@@ -149,21 +149,3 @@ class GitTool:
         if name.endswith(".git"):
             name = name[:-4]
         return name
-
-    def create_branch(self, repo_path: str, branch: str, checkout: bool = True) -> None:
-        # Create branch locally from current HEAD; if exists, just switch to it when requested
-        code, _, _ = self._run(["git", "rev-parse", "--verify", branch], cwd=repo_path)
-        if code != 0:
-            code2, out2, err2 = self._run(["git", "branch", branch], cwd=repo_path)
-            if code2 != 0:
-                raise GitError(f"git branch failed: {err2 or out2}")
-        if checkout:
-            c, o, e = self._run(["git", "checkout", branch], cwd=repo_path)
-            if c != 0:
-                raise GitError(f"git checkout failed: {e or o}")
-
-    def current_branch(self, repo_path: str) -> str:
-        code, out, err = self._run(["git", "rev-parse", "--abbrev-ref", "HEAD"], cwd=repo_path)
-        if code != 0 or not out:
-            raise GitError(f"git rev-parse failed: {err or out}")
-        return out.strip()

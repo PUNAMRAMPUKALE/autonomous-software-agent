@@ -1,5 +1,10 @@
 from jira import JIRA
-from settings import JIRA_URL, JIRA_EMAIL, JIRA_API_TOKEN, PROJECT_KEY
+import os
+
+JIRA_URL = os.environ.get("JIRA_URL", "")
+JIRA_EMAIL = os.environ.get("JIRA_EMAIL", "")
+JIRA_API_TOKEN = os.environ.get("JIRA_API_TOKEN", "")
+PROJECT_KEY = os.environ.get("JIRA_PROJECT_KEY", "")
 
 
 class JiraTool:
