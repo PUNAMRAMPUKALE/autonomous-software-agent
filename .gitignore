@@ -88,3 +88,4 @@ repository_index.json
 repository_graph.json
 patch.json
 response.json
+*.bak

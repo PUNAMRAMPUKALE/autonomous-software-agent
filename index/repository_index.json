@@ -3,36 +3,28 @@
         "name": "PlannerAgent",
         "type": "class",
         "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\agents\\planner.py",
-        "start_line": 6,
-        "end_line": 80,
+        "start_line": 1,
+        "end_line": 179,
         "parent": "",
         "docstring": "",
-        "imports": [
-            "tools.jira_tool",
-            "state",
-            "tools.git_tool"
-        ],
+        "imports": [],
         "calls": [],
         "decorators": [],
         "base_classes": [],
         "language": "Python",
         "complexity": 0,
-        "hash": "735b9ea0af3f7bcf48cbe1571cee9f2e79dd59c1fdf893c99b8dff71da507d43",
+        "hash": "cf7875c84766435ac2fc42dd203e0023fc5bf49f6c7c51eaed123cb23459246b",
         "symbol_id": "workspace\\autonomous-software-agent\\agents\\planner.py::PlannerAgent"
     },
     {
         "name": "__init__",
         "type": "function",
         "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\agents\\planner.py",
-        "start_line": 8,
-        "end_line": 11,
+        "start_line": 3,
+        "end_line": 6,
         "parent": "PlannerAgent",
         "docstring": "",
-        "imports": [
-            "tools.jira_tool",
-            "state",
-            "tools.git_tool"
-        ],
+        "imports": [],
         "calls": [
             "JiraTool",
             "GitTool"
@@ -48,24 +40,24 @@
         "name": "choose_next_story",
         "type": "function",
         "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\agents\\planner.py",
-        "start_line": 13,
-        "end_line": 60,
+        "start_line": 8,
+        "end_line": 144,
         "parent": "PlannerAgent",
         "docstring": "",
-        "imports": [
-            "tools.jira_tool",
-            "state",
-            "tools.git_tool"
-        ],
+        "imports": [],
         "calls": [
             "self.jira.get_todo_issues",
             "print",
-            "self.jira.move_issue",
+            "self.jira.add_comment",
             "self.jira.get_issue",
             "AgentState",
             "self._extract_repo_url",
             "len",
             "print",
+            "self.jira.move_issue",
+            "print",
+            "self.jira.add_comment",
+            "self.jira.record_test_results",
             "print",
             "self.git.clone",
             "print",
@@ -74,30 +66,41 @@
             "self.git.checkout",
             "self.git.pull",
             "self.git.build",
+            "self.jira.move_issue",
+            "self.jira.update_completion_notes",
             "print",
+            "self.jira.record_test_results",
+            "self.jira.add_pr_link",
             "print",
-            "print"
+            "self.jira.record_test_results",
+            "self.jira.update_completion_notes",
+            "print",
+            "self.jira.record_test_results",
+            "self.jira.move_issue",
+            "self.jira.update_completion_notes",
+            "self.jira.move_issue",
+            "self.jira.update_completion_notes",
+            "self.jira.update_completion_notes",
+            "self.jira.move_issue",
+            "self.jira.update_completion_notes",
+            "self.jira.update_completion_notes"
         ],
         "decorators": [],
         "base_classes": [],
         "language": "Python",
         "complexity": 0,
-        "hash": "077aba2477749ed66df11ed5821b85beb5e53358597ac99b947cc82e61f9981b",
+        "hash": "d410a0d31f3387365ded88e14f610bd7f621ca2450e6e13472d1b68fcba63c4a",
         "symbol_id": "workspace\\autonomous-software-agent\\agents\\planner.py::PlannerAgent.choose_next_story"
     },
     {
         "name": "print_selected_story",
         "type": "function",
         "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\agents\\planner.py",
-        "start_line": 62,
-        "end_line": 68,
+        "start_line": 146,
+        "end_line": 152,
         "parent": "PlannerAgent",
         "docstring": "",
-        "imports": [
-            "tools.jira_tool",
-            "state",
-            "tools.git_tool"
-        ],
+        "imports": [],
         "calls": [
             "self.jira.get_issue",
             "self.jira.print_issue"
@@ -113,26 +116,33 @@
         "name": "_extract_repo_url",
         "type": "function",
         "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\agents\\planner.py",
-        "start_line": 70,
-        "end_line": 80,
+        "start_line": 154,
+        "end_line": 179,
         "parent": "PlannerAgent",
         "docstring": "",
-        "imports": [
-            "tools.jira_tool",
-            "state",
-            "tools.git_tool"
-        ],
+        "imports": [],
         "calls": [
             "text.replace('\\n', ' ').split",
+            "raw.strip",
             "t.startswith",
             "text.replace",
-            "t.strip"
+            "t.startswith",
+            "t.endswith",
+            "p.strip",
+            "p.strip",
+            "p2.startswith",
+            "p.strip",
+            "p.startswith",
+            "inner.split",
+            "p.strip",
+            "t.split",
+            "p.strip"
         ],
         "decorators": [],
         "base_classes": [],
         "language": "Python",
         "complexity": 0,
-        "hash": "b179bb436dfcaa4b1b772cf807f5b4bbfeb5ee5e78e2a4a698366872b7d781ff",
+        "hash": "9763b83e9775b76e367fc0450cc84bdc0029bb5ae1080c57fcab657cfaec5ad0",
         "symbol_id": "workspace\\autonomous-software-agent\\agents\\planner.py::PlannerAgent._extract_repo_url"
     },
     {
@@ -514,33 +524,33 @@
         "name": "JiraTool",
         "type": "class",
         "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\jira_tool.py",
-        "start_line": 10,
-        "end_line": 78,
+        "start_line": 5,
+        "end_line": 94,
         "parent": "",
         "docstring": "",
         "imports": [
             "jira",
-            "os"
+            "settings"
         ],
         "calls": [],
         "decorators": [],
         "base_classes": [],
         "language": "Python",
         "complexity": 0,
-        "hash": "06b9d7fd444a8289730429a5a094f1f5350923b6377976edad7839db8beeeebc",
+        "hash": "f6eca3d4b4d72503837ca31599cecdc5033790f68ab3c3d0838cc364c9953172",
         "symbol_id": "workspace\\autonomous-software-agent\\tools\\jira_tool.py::JiraTool"
     },
     {
         "name": "__init__",
         "type": "function",
         "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\jira_tool.py",
-        "start_line": 12,
-        "end_line": 17,
+        "start_line": 7,
+        "end_line": 12,
         "parent": "JiraTool",
         "docstring": "",
         "imports": [
             "jira",
-            "os"
+            "settings"
         ],
         "calls": [
             "JIRA"
@@ -556,13 +566,13 @@
         "name": "get_todo_issues",
         "type": "function",
         "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\jira_tool.py",
-        "start_line": 19,
-        "end_line": 27,
+        "start_line": 14,
+        "end_line": 22,
         "parent": "JiraTool",
         "docstring": "",
         "imports": [
             "jira",
-            "os"
+            "settings"
         ],
         "calls": [
             "self.client.search_issues"
@@ -578,13 +588,13 @@
         "name": "get_issue",
         "type": "function",
         "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\jira_tool.py",
-        "start_line": 29,
-        "end_line": 31,
+        "start_line": 24,
+        "end_line": 26,
         "parent": "JiraTool",
         "docstring": "",
         "imports": [
             "jira",
-            "os"
+            "settings"
         ],
         "calls": [
             "self.client.issue"
@@ -600,13 +610,13 @@
         "name": "print_issue",
         "type": "function",
         "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\jira_tool.py",
-        "start_line": 33,
-        "end_line": 44,
+        "start_line": 28,
+        "end_line": 39,
         "parent": "JiraTool",
         "docstring": "",
         "imports": [
             "jira",
-            "os"
+            "settings"
         ],
         "calls": [
             "print",
@@ -631,13 +641,13 @@
         "name": "get_transition_id",
         "type": "function",
         "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\jira_tool.py",
-        "start_line": 46,
-        "end_line": 55,
+        "start_line": 41,
+        "end_line": 50,
         "parent": "JiraTool",
         "docstring": "",
         "imports": [
             "jira",
-            "os"
+            "settings"
         ],
         "calls": [
             "self.client.transitions",
@@ -655,13 +665,13 @@
         "name": "move_issue",
         "type": "function",
         "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\jira_tool.py",
-        "start_line": 57,
-        "end_line": 78,
+        "start_line": 52,
+        "end_line": 73,
         "parent": "JiraTool",
         "docstring": "",
         "imports": [
             "jira",
-            "os"
+            "settings"
         ],
         "calls": [
             "self.get_issue",
@@ -676,5 +686,94 @@
         "complexity": 0,
         "hash": "00d1aed318ce4bdb740b9a448af0dcd4466d72d62465fdd7afa14dfe439bfb53",
         "symbol_id": "workspace\\autonomous-software-agent\\tools\\jira_tool.py::JiraTool.move_issue"
+    },
+    {
+        "name": "add_comment",
+        "type": "function",
+        "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\jira_tool.py",
+        "start_line": 75,
+        "end_line": 77,
+        "parent": "JiraTool",
+        "docstring": "",
+        "imports": [
+            "jira",
+            "settings"
+        ],
+        "calls": [
+            "self.get_issue",
+            "self.client.add_comment"
+        ],
+        "decorators": [],
+        "base_classes": [],
+        "language": "Python",
+        "complexity": 0,
+        "hash": "c6a31423ebdb2bde391421361720dcad343d84c0c59fd546b7e7a9ed17dbef70",
+        "symbol_id": "workspace\\autonomous-software-agent\\tools\\jira_tool.py::JiraTool.add_comment"
+    },
+    {
+        "name": "add_pr_link",
+        "type": "function",
+        "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\jira_tool.py",
+        "start_line": 79,
+        "end_line": 84,
+        "parent": "JiraTool",
+        "docstring": "",
+        "imports": [
+            "jira",
+            "settings"
+        ],
+        "calls": [
+            "self.add_comment"
+        ],
+        "decorators": [],
+        "base_classes": [],
+        "language": "Python",
+        "complexity": 0,
+        "hash": "6ec606f24d4b865e523b54553e0825fd6badfb968d03c5d7fdafa0532a0b36f1",
+        "symbol_id": "workspace\\autonomous-software-agent\\tools\\jira_tool.py::JiraTool.add_pr_link"
+    },
+    {
+        "name": "record_test_results",
+        "type": "function",
+        "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\jira_tool.py",
+        "start_line": 86,
+        "end_line": 91,
+        "parent": "JiraTool",
+        "docstring": "",
+        "imports": [
+            "jira",
+            "settings"
+        ],
+        "calls": [
+            "self.add_comment"
+        ],
+        "decorators": [],
+        "base_classes": [],
+        "language": "Python",
+        "complexity": 0,
+        "hash": "d7359a8311e818a6f64ae5d635d0962c0ef258ad190d46b1d04d105ac434fddc",
+        "symbol_id": "workspace\\autonomous-software-agent\\tools\\jira_tool.py::JiraTool.record_test_results"
+    },
+    {
+        "name": "update_completion_notes",
+        "type": "function",
+        "file": "C:\\Users\\punam\\autonomous-software-agent\\workspace\\autonomous-software-agent\\tools\\jira_tool.py",
+        "start_line": 93,
+        "end_line": 94,
+        "parent": "JiraTool",
+        "docstring": "",
+        "imports": [
+            "jira",
+            "settings"
+        ],
+        "calls": [
+            "self.add_comment"
+        ],
+        "decorators": [],
+        "base_classes": [],
+        "language": "Python",
+        "complexity": 0,
+        "hash": "870022c2aff21408becd5b576bb190b577a5600703180f3ba4b8bf84e02cadad",
+        "symbol_id": "workspace\\autonomous-software-agent\\tools\\jira_tool.py::JiraTool.update_completion_notes"
     }
 ]

@@ -4,27 +4,22 @@ tools/github_pr_tool.py
 Milestone 10
 
 GitHub Pull Request Tool
-
-Responsibilities
-----------------
-- Authenticate with GitHub
-- Create Pull Requests
-- Comment on Pull Requests
-- Retrieve Pull Request URL
 """
 
 import os
 
+from dotenv import load_dotenv
 from github import Github
+
+# Load .env
+load_dotenv()
 
 
 class GitHubPRTool:
 
     def __init__(self):
 
-        token = os.getenv(
-            "GITHUB_TOKEN"
-        )
+        token = os.getenv("GITHUB_TOKEN")
 
         if not token:
 
@@ -42,11 +37,6 @@ class GitHubPRTool:
         self,
         repository_url,
     ):
-
-        #
-        # Example:
-        # https://github.com/user/repo.git
-        #
 
         repository = (
             repository_url
@@ -89,33 +79,23 @@ class GitHubPRTool:
         )
 
         pr = repo.create_pull(
-
             title=title,
-
             body=body,
-
             head=head_branch,
-
             base=base_branch,
-
         )
 
         print()
 
-        print(
-            f"PR Created : #{pr.number}"
-        )
-
-        print(
-            pr.html_url
-        )
+        print(f"PR Created : #{pr.number}")
+        print(pr.html_url)
 
         print("=" * 70)
 
         return pr
 
     # ---------------------------------------------------------
-    # Comment on PR
+    # Add Comment
     # ---------------------------------------------------------
 
     def add_comment(
@@ -137,11 +117,7 @@ class GitHubPRTool:
             comment
         )
 
-        print()
-
-        print(
-            "Comment added to Pull Request."
-        )
+        print("Comment added to Pull Request.")
 
     # ---------------------------------------------------------
     # Get Pull Request
